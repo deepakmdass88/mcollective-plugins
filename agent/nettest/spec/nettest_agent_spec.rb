@@ -1,7 +1,7 @@
 #!/usr/bin/env rspec
 require 'spec_helper'
 
-describe "puppetd agent" do
+describe "nettest agent" do
   before do
     agent_file = File.join([File.dirname(__FILE__), "../agent/nettest.rb"])
     @agent = MCollective::Test::LocalAgentTest.new("nettest", :agent_file => agent_file).plugin

@@ -1,11 +1,11 @@
 module MCollective
   module Agent
     class Nrpe<RPC::Agent
-      metadata    :name        => "SimpleRPC Agent For NRPE Commands",
+      metadata    :name        => "nrpe",
                   :description => "Agent to query NRPE commands via MCollective",
                   :author      => "R.I.Pienaar",
                   :license     => "Apache 2",
-                  :version     => "2.0",
+                  :version     => "2.1",
                   :url         => "http://projects.puppetlabs.com/projects/mcollective-plugins/wiki",
                   :timeout     => 5
 

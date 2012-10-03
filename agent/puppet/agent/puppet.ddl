@@ -84,9 +84,9 @@ action "last_run_summary", :description => "Get the summary of the last Puppet r
            :default     => {}
 
     summarize do
-        aggregate average(:config_retrieval_time, "Average: %0.2f")
-        aggregate average(:total_time, "Average: %0.2f")
-        aggregate average(:total_resources, "Average: %d")
+        aggregate average(:config_retrieval_time, :format => "Average: %0.2f")
+        aggregate average(:total_time, :format => "Average: %0.2f")
+        aggregate average(:total_resources, :format => "Average: %d")
     end
 end
 

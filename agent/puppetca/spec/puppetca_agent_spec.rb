@@ -53,7 +53,7 @@ describe "puppetca agent" do
   end
   describe "#revoke" do
     it "should revoke a cert" do
-      @agent.expects(:run).with(" --color=none --revoke 'certname'", :stdout => :output, :chomp => true).returns("true")
+      @agent.expects(:run).with("/usr/sbin/puppetca --color=none --revoke 'certname'", :stdout => :output, :chomp => true).returns("true")
       result = @agent.call(:revoke, :certname => "certname")
       result.should be_successful
       result.should have_data_items(:out => "true")
@@ -79,7 +79,7 @@ describe "puppetca agent" do
     it "should sign a cert if there is one waiting" do
       @agent.expects(:has_cert?).with("certname").returns(false)
       @agent.expects(:cert_waiting?).with("certname").returns(true)
-      @agent.expects(:run).with(" --color=none --sign 'certname'", :stdout => :output, :chomp => true).returns("true")
+      @agent.expects(:run).with("/usr/sbin/puppetca --color=none --sign 'certname'", :stdout => :output, :chomp => true).returns("true")
       result = @agent.call(:sign, :certname => "certname")
       result.should be_successful
       result.should have_data_items(:out => "true")
@@ -88,10 +88,9 @@ describe "puppetca agent" do
 
   describe "list" do
     it "should list all certs, signed and waiting" do
-      Dir.expects(:entries).with("/requests").returns(["requested.pem"])
-      Dir.expects(:entries).with("/signed").returns(["signed.pem"])
+      Dir.expects(:entries).with("/var/lib/puppet/ssl/ca/requests").returns(["requested.pem"])
+      Dir.expects(:entries).with("/var/lib/puppet/ssl/ca/signed").returns(["signed.pem"])
       result = @agent.call(:list)
-      result[:data].should == {:requests=>["requested"], :signed=>["signed"]}
       result.should be_successful
       result.should have_data_items(:signed=>["signed"], :requests=>["requested"])
     end
@@ -170,11 +169,11 @@ describe "puppetca agent" do
   describe "paths_for_cert" do
     it "should return get paths to all files involged with a cert" do
       @agent.expects(:has_cert?).with("certname").returns(false)
-      File.expects(:exist?).with("/requests/certname.pem").returns(true)
-      File.expects(:unlink).with("/requests/certname.pem")
+      File.expects(:exist?).with("/var/lib/puppet/ssl/ca/requests/certname.pem").returns(true)
+      File.expects(:unlink).with("/var/lib/puppet/ssl/ca/requests/certname.pem")
       result = @agent.call(:clean, :certname => "certname")
       result.should be_successful
-      result.should have_data_items(:msg=>"Removed csr: /requests/certname.pem")
+      result.should have_data_items(:msg=>"Removed csr: /var/lib/puppet/ssl/ca/requests/certname.pem")
     end
   end
 end

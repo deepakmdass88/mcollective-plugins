@@ -1,6 +1,8 @@
 $: << File.join([File.dirname(__FILE__), "lib"])
 
 require 'rubygems'
+gem "mcollective-test", ">= 0.3.0"
+
 require 'rspec'
 require 'mcollective'
 require 'mcollective/test'

@@ -7,6 +7,8 @@ module MCollective
         true
       end
 
+      attr_reader :puppet_agent, :puppet_command, :puppet_splaylimit
+
       def startup_hook
         @puppet_agent = PuppetAgentMgr.manager
         @puppet_command = @config.pluginconf.fetch("puppet.command", "puppet agent")
@@ -17,11 +19,10 @@ module MCollective
       action "disable" do
         begin
           msg = @puppet_agent.disable!(request.fetch(:message, "Disabled via MCollective by %s at %s local time" % [request.caller, Time.now]))
+          reply[:status] = "Succesfully locked the Puppet agent: %s" % msg
         rescue => e
           reply.fail! "Could not disable Puppet: %s" % e.to_s
         end
-
-        reply[:status] = "Succesfully locked the Puppet agent: %s" % msg
       end
 
       action "enable" do

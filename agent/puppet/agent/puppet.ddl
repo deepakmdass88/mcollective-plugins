@@ -2,11 +2,11 @@ metadata :name => "puppet",
          :description => "Run Puppet agent, get its status, and enable/disable it",
          :author => "R.I.Pienaar <rip@devco.net>",
          :license => "ASL2.0",
-         :version => "0.0.1",
+         :version => "0.0.3",
          :url => "http://puppetlabs.com",
          :timeout => 5
 
-requires :mcollective => "2.2.0"
+requires :mcollective => "2.2.1"
 
 action "disable", :description => "Disable the Puppet agent" do
     input :message,
@@ -130,10 +130,9 @@ action "status", :description => "Get the current status of the Puppet agent" do
 
 
     summarize do
-        # see ticket 16410
-        # aggregate summary(:enabled)
-        # aggregate summary(:applying)
-        # aggregate summary(:daemon_present)
+        aggregate summary(:enabled)
+        aggregate summary(:applying)
+        aggregate summary(:daemon_present)
         aggregate summary(:status)
     end
 end

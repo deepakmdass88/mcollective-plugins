@@ -11,7 +11,7 @@ dataquery :description => "Puppet Managed Resources" do
           :prompt => "Resource Name",
           :description => "Valid resource name",
           :type => :string,
-          :validation => /^.+$/,
+          :validation => :puppet_resource,
           :optional => true,
           :maxlength => 120
 

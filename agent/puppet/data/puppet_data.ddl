@@ -7,15 +7,6 @@ metadata    :name        => "puppet",
             :timeout     => 1
 
 dataquery :description => "Puppet Agent state" do
-    # bogus input query to keep ddl happy see 16424
-    input :query,
-          :prompt => "Resource Name",
-          :description => "Valid resource name",
-          :type => :string,
-          :validation => /^.+$/,
-          :optional => true,
-          :maxlength => 120
-
     output :applying,
            :description => "Is a catalog being applied",
            :display_as  => "Applying",

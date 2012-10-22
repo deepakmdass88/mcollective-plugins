@@ -6,3 +6,11 @@ metadata    :name        => "puppet_tags",
             :url         => "http://devco.net/",
             :timeout     => 1
 
+usage <<-EOU
+Puppet tags can be a comma seperated list of valid class names, for details
+about valid class names please see the puppet_variable validator documentation.
+
+An example of 2 tags would be:
+
+    apache,mysql::master
+EOU

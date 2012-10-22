@@ -6,6 +6,15 @@ metadata    :name        => "puppet",
             :url         => "http://puppetlabs.com/",
             :timeout     => 1
 
+usage <<-EOU
+This data plugin lets you extract information about the Puppet Agent Daemon
+for use in discovery and elsewhere.
+
+To force a Puppet catalog run on machine that has not recently run:
+
+   mco rpc puppet runonce -S "puppet().since_lastrun > 1800"
+EOU
+
 dataquery :description => "Puppet Agent state" do
     output :applying,
            :description => "Is a catalog being applied",
@@ -30,7 +39,7 @@ dataquery :description => "Puppet Agent state" do
     output :since_lastrun,
            :description => "How long ago did the Agent last apply a catalog in local time",
            :display_as  => "Since Last Run",
-           :default     => "Unknown"
+           :default     => -1
 
     output :status,
            :description => "Current status of the Puppet agent",

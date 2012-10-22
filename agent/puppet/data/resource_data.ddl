@@ -6,6 +6,24 @@ metadata    :name        => "resource",
             :url         => "http://puppetlabs.com/",
             :timeout     => 1
 
+usage <<-EOU
+This data resource can be used to act based the management state
+of a resource various properties related to resources of the most
+recent Puppet Catalog run.
+
+To act on machines managing /srv/www:
+
+    -S "resource('file[/srv/www]').managed = true"
+
+Or machines that had failed resources in their most recent run:
+
+    -S "resource().failed_resources > 0"
+
+Or ones that were particularly slow at applying their catalogs:
+
+    -S "resource().total_time > 360"
+EOU
+
 dataquery :description => "Puppet Managed Resources" do
     input :query,
           :prompt => "Resource Name",
